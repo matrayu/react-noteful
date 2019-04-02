@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin: 2%;
 }
 
 .App-logo {
@@ -8,9 +9,9 @@
   pointer-events: none;
 }
 
-.App-header {
+.App__header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,11 +24,18 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main__components {
+  display: flex;
 }
+
+.main__folderList {
+  flex: 1;
+  background: #bababa;
+}
+
+.main__noteList {
+  flex: 4;
+  background: #ebebeb;
+}
+
+

@@ -1,0 +1,12 @@
+.noteList__list {
+    list-style-type: none;
+    margin: 10px;
+    padding: 0;
+    text-align: left;
+}
+
+.noteList__buttons {
+    text-align: left;
+    margin-left: 10px;
+    margin-bottom: 30px;
+}
