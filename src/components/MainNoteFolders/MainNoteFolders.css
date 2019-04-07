@@ -1,9 +1,10 @@
-.note {
+.MainNoteFolders {
+    list-style: none;
     border: 2px solid black;
     margin-bottom: 5px;
     padding: 5px 15px 5px 15px;
 }
 
-.note__button {
+.MainNoteFolders__button {
     text-align: right;
 }

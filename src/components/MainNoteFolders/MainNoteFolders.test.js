@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppMain from './AppMain';
+import MainNoteFolders from './Note';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<AppMain />, div);
+  ReactDOM.render(<MainNoteFolders />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

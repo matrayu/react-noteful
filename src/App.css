@@ -24,16 +24,23 @@
   color: #61dafb;
 }
 
-.main__components {
+.App a,
+.App a:active,
+.App a:focus,
+.App a:visited {
+  color: #ffffff;
+}
+
+.App__main {
   display: flex;
 }
 
-.main__folderList {
+.App__mainNav {
   flex: 1;
   background: #bababa;
 }
 
-.main__noteList {
+.App__mainSection {
   flex: 4;
   background: #ebebeb;
 }
