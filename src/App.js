@@ -142,7 +142,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-/* notes={data.notes}
-folders={data.folders} */

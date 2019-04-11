@@ -3,11 +3,12 @@ import { NavLink } from 'react-router-dom'
 import './NavFolders.css'
 
 export default function NavFolders(props) {
-    console.log('NavFolders')
+
+    
     return (
         <div className='NavFolders'>
             <ul className='NavFolders__list'>
-            {props.folders.map(folder => 
+            {props.folders.map(folder =>
                 <li key={folder.id}>
                     <NavLink 
                         className='NavFolders__folderLink'
@@ -18,7 +19,13 @@ export default function NavFolders(props) {
                 </li>
             )}
             </ul>
-            <button>Add Folder</button>
+            <div className='NavFolders__addFolder'>
+                <button 
+                    className='NavFolders__addFolderBtn'
+                >
+                    Add Folder
+                </button>
+            </div>
         </div>
     )
 }

@@ -5,6 +5,14 @@
     text-align: left;
 }
 
+h2 {
+    color: black;
+}
+
+.MainNote__content {
+    text-align: left;
+}
+
 .MainNote__buttons {
     text-align: left;
     margin-left: 10px;

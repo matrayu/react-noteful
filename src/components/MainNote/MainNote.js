@@ -4,10 +4,9 @@ import './MainNote.css'
 export default function MainNote(props) {
     console.log('MainNote')
     return (
-        
         <div className="MainNote">
             <div className='MainNote__info'>
-                {props.note.name}
+                <h2>{props.note.name}</h2>
             </div>
             <div className='MainNote__content'>
                 {props.note.content}

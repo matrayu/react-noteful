@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
-import './MainNoteFolders.css'
+import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
+import './MainNoteFolders.css';
+
+
 
 export default function MainNoteFolders(props) {
-    console.log('MainNoteFolder')
+
     return (
         <div className='MainNoteFolders'>
             <ul className='MainNoteFolders__list'>
@@ -14,7 +17,7 @@ export default function MainNoteFolders(props) {
                                 <h2>{note.name}</h2>
                             </Link>
                             <div className='MainNoteFolders__modified'>
-                                {note.modified}
+                                {format(note.modified, 'Do MMM YYYY')}
                             </div>
                         </div>
                         <div className='MainNoteFolders__button'>
