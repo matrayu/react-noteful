@@ -4,6 +4,7 @@ import NavFolders from './components/NavFolders/NavFolders';
 import NavNote from './components/NavNote/NavNote';
 import MainNoteFolders from './components/MainNoteFolders/MainNoteFolders';
 import MainNote from './components/MainNote/MainNote';
+
 import dummyStore from './dummy-store';
 import './App.css';
 
