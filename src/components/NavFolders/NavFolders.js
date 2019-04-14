@@ -1,31 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
+import NotesContext from '../NotesContext';
 import { NavLink } from 'react-router-dom'
 import './NavFolders.css'
 
-export default function NavFolders(props) {
+class NavFolders extends Component {
+    static contextType = NotesContext; 
 
-    
-    return (
-        <div className='NavFolders'>
-            <ul className='NavFolders__list'>
-            {props.folders.map(folder =>
-                <li key={folder.id}>
-                    <NavLink 
-                        className='NavFolders__folderLink'
-                        to={`/folders/${folder.id}`}
+    /* static defaultProps = {
+        folders: [],
+    } */
+
+    render() {
+        const { folders } = this.context
+        return (
+            <div className='NavFolders'>
+                <ul className='NavFolders__list'>
+                {folders.map(folder =>
+                    <li key={folder.id}>
+                        <NavLink 
+                            className='NavFolders__folderLink'
+                            to={`/folders/${folder.id}`}
+                        >
+                            {folder.name}
+                        </NavLink>
+                    </li>
+                )}
+                </ul>
+                <div className='NavFolders__addFolder'>
+                    <button 
+                        className='NavFolders__addFolderBtn'
                     >
-                        {folder.name}
-                    </NavLink>
-                </li>
-            )}
-            </ul>
-            <div className='NavFolders__addFolder'>
-                <button 
-                    className='NavFolders__addFolderBtn'
-                >
-                    Add Folder
-                </button>
+                        Add Folder
+                    </button>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
+
+export default NavFolders;
