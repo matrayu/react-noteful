@@ -10,8 +10,9 @@ export default class MainNote extends React.Component {
     }
     static contextType = NotesContext
 
-    handleClickDelete = (e) => {
-        e.preventDefault()
+    handleClickDelete(e) {
+        console.log(e)
+        e.preventDefault();
         const noteId = this.props.match.params.noteId
         fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
                 method: 'DELETE',
@@ -55,7 +56,7 @@ export default class MainNote extends React.Component {
                 </div>
                 <button
                     className='MainNote__button'
-                    onClick={this.handleClickDelete}
+                    onClick={e => {this.handleClickDelete(e)}}
                 >
                     Delete
                 </button>

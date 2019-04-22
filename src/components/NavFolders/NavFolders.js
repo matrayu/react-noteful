@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import NotesContext from '../NotesContext';
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import './NavFolders.css'
 
 class NavFolders extends Component {
     static contextType = NotesContext; 
-
-    /* static defaultProps = {
-        folders: [],
-    } */
-
+    
     render() {
         const { folders } = this.context
         return (
@@ -27,11 +23,13 @@ class NavFolders extends Component {
                 )}
                 </ul>
                 <div className='NavFolders__addFolder'>
-                    <button 
-                        className='NavFolders__addFolderBtn'
-                    >
-                        Add Folder
-                    </button>
+                    <Link to='/add-folder'>
+                        <button 
+                            className='NavFolders__addFolderBtn'
+                        >
+                            Add Folder
+                        </button>
+                    </Link>
                 </div>
             </div>
         )

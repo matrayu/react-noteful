@@ -76,7 +76,10 @@ export default class MainNoteFolders extends React.Component {
                         </li>
                     )}
                 </ul>
-                <button>Add Note</button>
+                <Link to={'/add-note'}>
+                    <button>Add Note</button>
+                </Link>
+                
             </div>
         )
     }

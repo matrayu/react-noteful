@@ -4,6 +4,10 @@ import NavFolders from './components/NavFolders/NavFolders';
 import NavNote from './components/NavNote/NavNote';
 import MainNoteFolders from './components/MainNoteFolders/MainNoteFolders';
 import MainNote from './components/MainNote/MainNote';
+import MainAddFolder from './components/MainAddFolder/MainAddFolder';
+import MainAddNote from './components/MainAddNote/MainAddNote';
+import NavAddFolder from './components/NavAddFolder/NavAddFolder';
+import NavAddNote from './components/NavAddNote/NavAddNote';
 import NotesContext from './components/NotesContext';
 import config from 'config';
 
@@ -13,15 +17,9 @@ class App extends Component {
   state = {
     folders: [],
     notes: [],
+    showAddFolder: false,
+    showAddNote: false,
     error: null,
-  }
-
-  deleteNote = noteId => {
-    console.log('deleteNote ran', noteId)
-    const newNotes = this.state.notes.filter(note => 
-      note.id !== noteId  
-    )
-    this.setState({ notes: newNotes })
   }
 
   componentDidMount() {
@@ -54,7 +52,29 @@ class App extends Component {
       .catch(e => {
         console.error(e)
       })
-  }
+  };
+
+  deleteNote = noteId => {
+    console.log('deleteNote ran', noteId)
+    const newNotes = this.state.notes.filter(note => 
+      note.id !== noteId  
+    )
+    this.setState({ notes: newNotes })
+  };
+
+  addFolder = folderName => {
+    console.log('addFolder ran', folderName);
+    this.setState({
+      folders: [...this.state.folders, folderName]
+    })
+  };
+
+  addNote = note => {
+    console.log('addNote ran', note);
+    this.setState({
+      notes: [...this.state.notes, note]
+    })
+  };
 
   renderNavRoutes() {
     return (
@@ -71,6 +91,14 @@ class App extends Component {
         <Route
           path='/note/:noteId'
           component={NavNote}
+        />
+        <Route
+          path='/add-folder'
+          component={NavAddFolder}
+        />
+        <Route
+          path='/add-note'
+          component={NavAddNote}
         />
       </>
     )
@@ -90,6 +118,14 @@ class App extends Component {
         <Route
           path='/note/:noteId'
           component={MainNote}
+        />
+        <Route
+          path='/add-folder'
+          render={(renderProps) => <MainAddFolder {...renderProps} handleAdd={folder => this.addFolder(folder)} />}
+        />
+        <Route
+          path='/add-note'
+          render={(renderProps) => <MainAddNote {...renderProps} handleAdd={note => this.addNote(note)} />}
         />
       </>
     )
