@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ValidationError from '../ValidationError';
+import PropTypes from 'prop-types'
 import uuid from 'uuid';
 import './MainAddFolder.css'
 
@@ -94,9 +95,6 @@ class MainAddFolder extends Component {
 
     
     render() {
-        const error = this.state.error
-            ? <div className='error'>{this.state.error}</div>
-            : "";
 
         return (
             <div className='mainAddFolder'>
@@ -112,6 +110,10 @@ class MainAddFolder extends Component {
             </div>
         )
     }
+}
+
+MainAddFolder.propTypes = {
+    handleAdd: PropTypes.func
 }
 
 export default MainAddFolder;

@@ -9,6 +9,7 @@ import MainAddNote from './components/MainAddNote/MainAddNote';
 import NavAddFolder from './components/NavAddFolder/NavAddFolder';
 import NavAddNote from './components/NavAddNote/NavAddNote';
 import NotesContext from './components/NotesContext';
+import AppError from './AppError';
 import config from 'config';
 
 import './App.css';
@@ -55,7 +56,6 @@ class App extends Component {
   };
 
   deleteNote = noteId => {
-    console.log('deleteNote ran', noteId)
     const newNotes = this.state.notes.filter(note => 
       note.id !== noteId  
     )
@@ -63,14 +63,12 @@ class App extends Component {
   };
 
   addFolder = folderName => {
-    console.log('addFolder ran', folderName);
     this.setState({
       folders: [...this.state.folders, folderName]
     })
   };
 
   addNote = note => {
-    console.log('addNote ran', note);
     this.setState({
       notes: [...this.state.notes, note]
     })
@@ -147,12 +145,14 @@ class App extends Component {
         </header>
         <NotesContext.Provider value={contextValue}>
           <main className="App__main">
-            <nav className="App__mainNav">
-              {this.renderNavRoutes()}
-            </nav>
-            <section className='App__mainSection'>
-              {this.renderMainRoutes()}
-            </section>
+            <AppError>
+              <nav className="App__mainNav">
+                {this.renderNavRoutes()}
+              </nav>
+              <section className='App__mainSection'>
+                {this.renderMainRoutes()}
+              </section>
+            </AppError>
           </main>
         </NotesContext.Provider>
       </div>

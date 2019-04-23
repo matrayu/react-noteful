@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NotesContext from '../NotesContext';
 import ValidationError from '../ValidationError';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import uuid from 'uuid';
 import './MainAddNote.css'
@@ -14,13 +15,13 @@ class MainAddNote extends Component {
             "modified": moment().toISOString(),
             "folderId": "",
             "content": "",
-            "error": "",
+            "error": false,
             "nameValid": false,
             "folderValid":  false,
             "formValid": false,
             "validationMessages": {
                 name: "",
-                folder: "A folder must be selected",
+                folder: "",
             },
         };
     };
@@ -51,9 +52,7 @@ class MainAddNote extends Component {
     };
 
     formValid() {
-        console.log('formValid ran');
         if (this.state.nameValid && this.state.folderValid) {
-            console.log('Note Form VALID!')
         }
         this.setState({
             formValid: this.state.nameValid && this.state.folderValid
@@ -72,8 +71,6 @@ class MainAddNote extends Component {
             fieldErrors.name = '';
             hasError = false;
         }
-
-        console.log('Name is valid', this.state.nameValid)
         this.setState({
             validationMessages: fieldErrors,
             nameValid: !hasError,
@@ -148,11 +145,6 @@ class MainAddNote extends Component {
     }
 
     render() {
-
-        const error = this.state.error
-            ? <div className='error'>{this.state.error}</div>
-            : "";
-
         const { folders } = this.context;
         const foldersList = folders.map(folder => {
             return (
@@ -166,7 +158,7 @@ class MainAddNote extends Component {
                 <form className='mainAddNote__form' onSubmit={e => this.handleSubmit(e)}>
                     <label htmlFor='name'>Name</label>
                     <input type='text' name='name' id='name' placeholder='' value={this.state.name} onChange={e => this.noteNameChange(e.target.value)} />
-                    <ValidationError hasError={!this.state.nameValid} message={this.state.validationMessage} />
+                    <ValidationError hasError={!this.state.nameValid} message={this.state.validationMessages.name} />
                     <label htmlFor='content'>Content</label>
                     <input type='text' name='content' id='content' placeholder='' value={this.state.content} onChange={e => this.noteContentChange(e.target.value)} />
                     <label htmlFor='folder'>Folder</label> 
@@ -174,7 +166,7 @@ class MainAddNote extends Component {
                         <option>...</option>
                         {foldersList}
                     </select>
-                    <ValidationError hasError={!this.state.folderValid} message={this.state.validationMessage} />
+                    <ValidationError hasError={!this.state.folderValid} message={this.state.validationMessages.folder} />
                     <div className='mainAddNote__buttons'>
                         <button type='submit' disabled={!this.state.formValid}>Add note</button>
                     </div>
@@ -182,6 +174,10 @@ class MainAddNote extends Component {
             </div>
         )
     }
+}
+
+MainAddNote.propTypes = {
+    handleAdd: PropTypes.func
 }
 
 export default MainAddNote;

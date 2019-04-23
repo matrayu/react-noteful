@@ -1,6 +1,7 @@
 import React from 'react';
 import config from 'config';
 import NotesContext from '../NotesContext';
+import PropTypes from 'prop-types';
 import './MainNote.css'
 
 
@@ -8,10 +9,10 @@ export default class MainNote extends React.Component {
     static defaultProps = {
         deleteNote: () => {}
     }
+
     static contextType = NotesContext
 
     handleClickDelete(e) {
-        console.log(e)
         e.preventDefault();
         const noteId = this.props.match.params.noteId
         fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
@@ -63,4 +64,8 @@ export default class MainNote extends React.Component {
             </div>  
         );
     }
+}
+
+MainNote.propTypes = {
+    deleteNote: PropTypes.func
 }

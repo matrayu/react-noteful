@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NotesContext from '../NotesContext';
+import PropTypes from 'prop-types'
 import './MainNoteFolders.css';
 
 export default class MainNoteFolders extends React.Component {
@@ -15,8 +16,7 @@ export default class MainNoteFolders extends React.Component {
     static contextType = NotesContext
 
     handleDeleteRequest = (noteId, e) => {
-        e.preventDefault()
-        console.log('delete note!', noteId)
+        e.preventDefault();
 
         fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
             method: 'DELETE',
@@ -79,8 +79,12 @@ export default class MainNoteFolders extends React.Component {
                 <Link to={'/add-note'}>
                     <button>Add Note</button>
                 </Link>
-                
             </div>
         )
     }
+}
+
+MainNoteFolders.propTypes = {
+    deleteNote: PropTypes.func,
+    note: PropTypes.object
 }
