@@ -58,11 +58,13 @@ export default class MainNoteFolders extends React.Component {
                     {folderNotes.map(note => 
                         <li className='MainNoteFolders' id={note.id} key={note.id}>
                             <div className='MainNoteFolders__row'>
-                                <Link to={`/note/${note.id}`}>
-                                    <h2>{note.name}</h2>
-                                </Link>
+                                <div className="MainNoteFolders__title">
+                                    <Link to={`/note/${note.id}`}>
+                                        <h2>{note.name}</h2>
+                                    </Link>
+                                </div>
                                 <div className='MainNoteFolders__modified'>
-                                    {format(note.modified, 'Do MMM YYYY')}
+                                    Created: {format(note.modified, 'Do MMM YYYY')}
                                 </div>
                             </div>
                             <div className='MainNoteFolders__button'>
@@ -76,9 +78,11 @@ export default class MainNoteFolders extends React.Component {
                         </li>
                     )}
                 </ul>
-                <Link to={'/add-note'}>
-                    <button>Add Note</button>
-                </Link>
+                <div className="bttn__block">
+                    <Link to={'/add-note'}>
+                        <button className="MainNoteFolders__addNote_button">Add Note</button>
+                    </Link>
+                </div>
             </div>
         )
     }

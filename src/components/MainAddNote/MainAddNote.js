@@ -154,7 +154,7 @@ class MainAddNote extends Component {
 
         return (
             <div className='mainAddNote'>
-                <h2>Create a note</h2>
+                <h2 className='mainAddNote__header'>Create a note</h2>
                 <form className='mainAddNote__form' onSubmit={e => this.handleSubmit(e)}>
                     <label htmlFor='name'>Name</label>
                     <input type='text' name='name' id='name' placeholder='' value={this.state.name} onChange={e => this.noteNameChange(e.target.value)} />

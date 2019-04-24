@@ -141,7 +141,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App__header">
-          <Link to='/'>Noteful</Link>
+          <Link className="App__link" to='/'>Noteful</Link>
         </header>
         <NotesContext.Provider value={contextValue}>
           <main className="App__main">

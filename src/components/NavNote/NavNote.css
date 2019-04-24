@@ -1,10 +1,31 @@
-.NavNote {
-    display: grid;
-    list-style-type: none;
-    margin: 10px;
-    padding: 0;
+.NavNote__button {
+    border: none;
+    text-decoration: none;
+    background: #000000;
+    color: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* display: block; */
+    font-size: 20px;
+    max-width: 180px;
+    min-width: 100%;
+    padding: 8px 16px;
+    margin: 49px 0;
 }
 
-.NavNote__button {
-    margin-top: 30px;
+.NavNote__button:hover,
+.NavNote__button:focus {
+    background: #ffffff;
+    color: black;
+}
+
+.NavNote__button:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+.NavNote__button:active {
+    transform: scale(0.99);
 }
