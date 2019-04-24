@@ -13,6 +13,7 @@ class MainAddFolder extends Component {
             "nameValid": false,
             "formValid": false,
             "validationMessage": '',
+            "error": true,
         };
     }
 
@@ -79,7 +80,7 @@ class MainAddFolder extends Component {
 
         fieldValue = fieldValue.trim();
         if (fieldValue.length === 0) {
-            fieldError = 'Name is required';
+            fieldError = 'A folder name is required';
             hasError = true;
         } else {
             fieldError = '';

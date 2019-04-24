@@ -15,7 +15,7 @@ class MainAddNote extends Component {
             "modified": moment().toISOString(),
             "folderId": "",
             "content": "",
-            "error": false,
+            "error": true,
             "nameValid": false,
             "folderValid":  false,
             "formValid": false,
@@ -53,10 +53,14 @@ class MainAddNote extends Component {
 
     formValid() {
         if (this.state.nameValid && this.state.folderValid) {
+            console.log('formValidRan - no error')
+            this.setState({
+                formValid: this.state.nameValid && this.state.folderValid
+            });
+        } else {
+            console.log('formValidRan - error')
+            this.setState({ formValid: false })
         }
-        this.setState({
-            formValid: this.state.nameValid && this.state.folderValid
-        });
     };
 
     validateName(fieldValue) {
@@ -110,10 +114,10 @@ class MainAddNote extends Component {
 
         if (!formValid) {
             if (!nameValid) {
-                alert(messages.name)
+                console.log(messages.name)
             }
             else if (!folderValid) {
-                alert(messages.folder)
+                console.log(messages.folder)
             }
         }
         else {
@@ -145,6 +149,7 @@ class MainAddNote extends Component {
     }
 
     render() {
+
         const { folders } = this.context;
         const foldersList = folders.map(folder => {
             return (
@@ -156,17 +161,18 @@ class MainAddNote extends Component {
             <div className='mainAddNote'>
                 <h2 className='mainAddNote__header'>Create a note</h2>
                 <form className='mainAddNote__form' onSubmit={e => this.handleSubmit(e)}>
+                    <ValidationError hasError={!this.state.nameValid} message={this.state.validationMessages.name} />
                     <label htmlFor='name'>Name</label>
                     <input type='text' name='name' id='name' placeholder='' value={this.state.name} onChange={e => this.noteNameChange(e.target.value)} />
-                    <ValidationError hasError={!this.state.nameValid} message={this.state.validationMessages.name} />
                     <label htmlFor='content'>Content</label>
                     <input type='text' name='content' id='content' placeholder='' value={this.state.content} onChange={e => this.noteContentChange(e.target.value)} />
-                    <label htmlFor='folder'>Folder</label> 
+                    <ValidationError hasError={!this.state.folderValid} message={this.state.validationMessages.folder} />
+                    <label htmlFor='folder'>Folder</label>
                     <select name='folder' id='folder' onChange={e => this.noteFolderChange(e.target.value)} >
                         <option>...</option>
                         {foldersList}
                     </select>
-                    <ValidationError hasError={!this.state.folderValid} message={this.state.validationMessages.folder} />
+                    
                     <div className='mainAddNote__buttons'>
                         <button type='submit' disabled={!this.state.formValid}>Add note</button>
                     </div>
