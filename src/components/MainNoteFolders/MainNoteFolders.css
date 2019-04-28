@@ -35,7 +35,7 @@
     --note-button-height: 32px;
     background-color: #000000;
     border: 0;
-    color: #bdbcbc;
+    color: #ffffff;
     float: right;
     font-size: 12px;
     height: var(--note-button-height);
@@ -69,7 +69,7 @@
 }
 
 .MainNoteFolders__modified {
-    color: #828080;
+    color: #303030;
     font-size: 14px;
 }
 
