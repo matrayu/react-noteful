@@ -29,3 +29,12 @@
 .NavNote__button:active {
     transform: scale(0.99);
 }
+
+.NavNote__name {
+    color: #ffffff;
+    text-align: center;
+    -moz-appearance: none;
+    font-size: 36px;
+    max-width: 180px;
+    min-width: 100%;
+}
