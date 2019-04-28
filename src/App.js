@@ -110,7 +110,7 @@ class App extends Component {
             exact
             key={path}
             path={path}
-            component={MainNoteFolders}
+            render={(renderProps) => <MainNoteFolders {...renderProps} />}
           />
         )}
         <Route
