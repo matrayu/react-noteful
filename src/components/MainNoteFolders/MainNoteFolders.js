@@ -11,6 +11,11 @@ export default class MainNoteFolders extends React.Component {
         note: {
             content: '',
         },
+        match: {
+            params: {
+                folderId: '',
+            },
+        },
         deleteNote: () => {}
     }
     static contextType = NotesContext
@@ -41,16 +46,16 @@ export default class MainNoteFolders extends React.Component {
     }
 
     render() {
-        const { notes } = this.context
+        const { notes } = this.context;
 
         const getFolderNotes = (notes=[], folderId) => (
             (!folderId) 
               ? notes 
               : notes.filter(note => note.folderId === folderId)
-        )
-
+        );
+        
         const { folderId } = this.props.match.params
-        const folderNotes = getFolderNotes(notes, folderId)
+        const folderNotes = getFolderNotes(notes, folderId);
 
         return (
             <div className='MainNoteFolders'>
