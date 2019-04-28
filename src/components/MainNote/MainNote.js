@@ -7,7 +7,12 @@ import './MainNote.css'
 
 export default class MainNote extends React.Component {
     static defaultProps = {
-        deleteNote: () => {}
+        deleteNote: () => {}, 
+        match: {
+            params: {
+                noteId: '',
+            },
+        },
     }
 
     static contextType = NotesContext
