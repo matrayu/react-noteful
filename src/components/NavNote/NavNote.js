@@ -10,12 +10,13 @@ class NavNote extends Component {
             goBack: () => { }
         },
         match: {
-            params: {}
-        }
+            params: {},
+        },
     }
 
     render() {
-        const { notes, folders } = this.context
+        const { notes, folders } = this.context;
+        
         const findNote = (notes, noteId) => {
             const foundNote = notes.find(note => note.id === noteId)
             return foundNote
@@ -25,13 +26,13 @@ class NavNote extends Component {
             return foundFolder
         };
 
-        const { noteId } = this.props.match.params
-        const note = findNote(notes, noteId) || {}
-        const folder = findFolder(folders, note.folderId)
+        const { noteId } = this.props.match.params;
+        const note = findNote(notes, noteId) || {};
+        const folder = findFolder(folders, note.folderId) || {};
 
         return (
             <div className="NavNote">
-                {folder.name}
+                <div className='NavNote__name'>{folder.name}</div>
                 <button 
                     className='NavNote__button'
                     onClick={() => this.props.history.goBack()}
