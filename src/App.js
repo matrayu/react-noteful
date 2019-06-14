@@ -10,7 +10,7 @@ import NavAddFolder from './components/NavAddFolder/NavAddFolder';
 import NavAddNote from './components/NavAddNote/NavAddNote';
 import NotesContext from './components/NotesContext';
 import AppError from './AppError';
-import config from 'config';
+import config from './config';
 
 import './App.css';
 
@@ -55,17 +55,29 @@ class App extends Component {
       })
   };
 
-  deleteNote = noteId => {
-    const newNotes = this.state.notes.filter(note => 
-      note.id !== noteId  
-    )
+  deleteNote = notes => {
+    const newNotes = this.state.notes.filter(note => note.id != notes)
     this.setState({ notes: newNotes })
+  }
+
+  deleteFolder = (folderId, folderNotes, cb) => {
+    const newFolders = this.state.folders.filter(folder => folder.id != folderId)
+    let newNotes = this.state.notes;
+    folderNotes.forEach(n => {
+      newNotes = newNotes.filter(note => {
+        return note.id !== n.id;
+      })
+    });
+    this.setState({
+        folders: newFolders,
+        notes: newNotes 
+    }, cb())
   };
 
-  addFolder = folderName => {
-    this.setState({
-      folders: [...this.state.folders, folderName]
-    })
+  addFolder = (folderName, cb) => {
+    this.setState({ 
+      folders: [...this.state.folders, folderName] 
+    }, cb())
   };
 
   addNote = note => {
@@ -87,7 +99,7 @@ class App extends Component {
         )}
         
         <Route
-          path='/note/:noteId'
+          path='/notes/:noteId'
           component={NavNote}
         />
         <Route
@@ -114,12 +126,12 @@ class App extends Component {
           />
         )}
         <Route
-          path='/note/:noteId'
+          path='/notes/:noteId'
           component={MainNote}
         />
         <Route
           path='/add-folder'
-          render={(renderProps) => <MainAddFolder {...renderProps} handleAdd={folder => this.addFolder(folder)} />}
+          render={(renderProps) => <MainAddFolder {...renderProps} handleAdd={(folder, cb) => this.addFolder(folder, cb)} />}
         />
         <Route
           path='/add-note'
