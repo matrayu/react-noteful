@@ -32,7 +32,7 @@ class NavNote extends Component {
 
         return (
             <div className="NavNote">
-                <div className='NavNote__name'>{folder.name}</div>
+                <div className='NavNote__name'>{folder.foldername}</div>
                 <button 
                     className='NavNote__button'
                     onClick={() => this.props.history.goBack()}
