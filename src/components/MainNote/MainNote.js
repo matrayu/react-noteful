@@ -1,8 +1,8 @@
 import React from 'react';
-import config from 'config';
+import config from '../../config.js';
 import NotesContext from '../NotesContext';
 import PropTypes from 'prop-types';
-import './MainNote.css'
+import './MainNote.css';
 
 
 export default class MainNote extends React.Component {
@@ -32,7 +32,7 @@ export default class MainNote extends React.Component {
                         throw error
                     })
                 }
-                return res.json()
+                return res
             })
             .then(data => {
                 this.props.history.push('/')
@@ -45,17 +45,17 @@ export default class MainNote extends React.Component {
     
     render() {
         const { notes } = this.context
+        const { noteId } = this.props.match.params
         const findNote = (notes, noteId) => {
-            const foundNote = notes.find(note => note.id === noteId)
+            const foundNote = notes.find(note => note.id == noteId)
             return foundNote
         };
-        const { noteId } = this.props.match.params
         const note = findNote(notes, noteId) || {}
 
         return (
             <div className="MainNote">
                 <div className='MainNote__info'>
-                    <h2>{note.name}</h2>
+                    <h2>{note.title}</h2>
                 </div>
                 <div className='MainNote__content'>
                     {note.content}
