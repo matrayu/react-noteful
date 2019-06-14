@@ -113,12 +113,14 @@ export default class MainNoteFolders extends React.Component {
                         <button className="MainNoteFolders__addNote_button">Add Note</button>
                     </Link>
                     <div className='MainNoteFolders__deleteFolder'>
-                        <button 
-                            className='MainNoteFolders__deleteFolder_button'
-                            onClick={this.handleFolderDeleteRequest.bind(this, folderId, folderNotes)}
-                        >
-                            Delete Folder
-                        </button>
+                        {(this.props.location.pathname == '/') ? '' : 
+                            <button 
+                                className='MainNoteFolders__deleteFolder_button'
+                                onClick={this.handleFolderDeleteRequest.bind(this, folderId, folderNotes)}
+                            >
+                                Delete Folder
+                            </button>
+                        }
                     </div>
                 </div>
             </div>
