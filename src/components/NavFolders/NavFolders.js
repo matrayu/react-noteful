@@ -17,7 +17,7 @@ class NavFolders extends Component {
                             className='NavFolders__folderLink'
                             to={`/folders/${folder.id}`}
                         >
-                            {folder.name}
+                            {folder.foldername}
                         </NavLink>
                     </li>
                 )}
