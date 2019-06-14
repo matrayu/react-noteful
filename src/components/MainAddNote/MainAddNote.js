@@ -2,25 +2,22 @@ import React, { Component } from 'react';
 import NotesContext from '../NotesContext';
 import ValidationError from '../ValidationError';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import uuid from 'uuid';
 import './MainAddNote.css'
+import config from '../../config.js';
 
 class MainAddNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            "id": uuid.v4(),
-            "name": "",
-            "modified": moment().toISOString(),
-            "folderId": "",
+            "title": "",
+            "folder_id": "",
             "content": "",
             "error": true,
             "nameValid": false,
             "folderValid":  false,
             "formValid": false,
             "validationMessages": {
-                name: "",
+                title: "",
                 folder: "",
             },
         };
@@ -37,8 +34,8 @@ class MainAddNote extends Component {
 
     static contextType = NotesContext;
 
-    noteNameChange(name) {
-        this.setState({name}, () => {this.validateName(name)} );
+    noteTitleChange(title) {
+        this.setState({title}, () => {this.validateTitle(title)} );
     };
 
     noteContentChange(content) {
@@ -47,37 +44,35 @@ class MainAddNote extends Component {
         });
     };
 
-    noteFolderChange(folderId) {
-        this.setState({folderId}, () => this.validateFolder(folderId));
+    noteFolderChange(folder_id) {
+        this.setState({folder_id}, () => this.validateFolder(folder_id));
     };
 
     formValid() {
-        if (this.state.nameValid && this.state.folderValid) {
-            console.log('formValidRan - no error')
+        if (this.state.titleValid && this.state.folderValid) {
             this.setState({
-                formValid: this.state.nameValid && this.state.folderValid
+                formValid: this.state.titleValid && this.state.folderValid
             });
         } else {
-            console.log('formValidRan - error')
             this.setState({ formValid: false })
         }
     };
 
-    validateName(fieldValue) {
+    validateTitle(fieldValue) {
         const fieldErrors = {...this.state.validationMessages}
         let hasError = false;
 
         fieldValue = fieldValue.trim()
         if (fieldValue.length === 0) {
-            fieldErrors.name = 'Name is required';
+            fieldErrors.title = 'Title is required';
             hasError = true;
         } else {
-            fieldErrors.name = '';
+            fieldErrors.title = '';
             hasError = false;
         }
         this.setState({
             validationMessages: fieldErrors,
-            nameValid: !hasError,
+            titleValid: !hasError,
         }, this.formValid );
     }
 
@@ -101,9 +96,9 @@ class MainAddNote extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const messages = {...this.state.validationMessages};
-        const { nameValid, folderValid, formValid } = this.state;
-        const note = (({id, name, modified, folderId, content}) => ({id, name, modified, folderId, content}))(this.state);
-        const url = 'http://localhost:9090/notes'
+        const { titleValid, folderValid, formValid } = this.state;
+        const note = (({title, folder_id, content}) => ({title, folder_id, content}))(this.state);
+        const url = `${config.API_ENDPOINT}/notes`
         const options = {
             method: 'POST',
             body: JSON.stringify(note),
@@ -113,8 +108,8 @@ class MainAddNote extends Component {
         };
 
         if (!formValid) {
-            if (!nameValid) {
-                console.log(messages.name)
+            if (!titleValid) {
+                console.log(messages.title)
             }
             else if (!folderValid) {
                 console.log(messages.folder)
@@ -130,13 +125,11 @@ class MainAddNote extends Component {
             })
             .then(data => {
                 this.setState({
-                    "id": uuid.v4(),
-                    "name": "",
-                    "modified": moment().toISOString(),
-                    "folderId": "",
+                    "title": "",
+                    "folder_id": "",
                     "content": "",
                 })
-                this.props.handleAdd(note)
+                this.props.handleAdd(data)
                 this.props.history.goBack()
             })
             .catch(err => {
@@ -153,7 +146,7 @@ class MainAddNote extends Component {
         const { folders } = this.context;
         const foldersList = folders.map(folder => {
             return (
-                <option value={folder.id} key={folder.id}>{folder.name}</option>
+                <option value={folder.id} key={folder.id}>{folder.foldername}</option>
             )
         })
 
@@ -161,9 +154,9 @@ class MainAddNote extends Component {
             <div className='mainAddNote'>
                 <h2 className='mainAddNote__header'>Create a note</h2>
                 <form className='mainAddNote__form' onSubmit={e => this.handleSubmit(e)}>
-                    <ValidationError hasError={!this.state.nameValid} message={this.state.validationMessages.name} />
+                    <ValidationError hasError={!this.state.titleValid} message={this.state.validationMessages.name} />
                     <label htmlFor='name'>Name</label>
-                    <input type='text' name='name' id='name' placeholder='' value={this.state.name} onChange={e => this.noteNameChange(e.target.value)} />
+                    <input type='text' name='name' id='name' placeholder='' value={this.state.title} onChange={e => this.noteTitleChange(e.target.value)} />
                     <label htmlFor='content'>Content</label>
                     <input type='text' name='content' id='content' placeholder='' value={this.state.content} onChange={e => this.noteContentChange(e.target.value)} />
                     <ValidationError hasError={!this.state.folderValid} message={this.state.validationMessages.folder} />
