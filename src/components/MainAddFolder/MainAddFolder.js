@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import ValidationError from '../ValidationError';
 import PropTypes from 'prop-types'
-import uuid from 'uuid';
 import './MainAddFolder.css'
+import config from '../../config.js';
 
 class MainAddFolder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            id: uuid.v4(),
+            foldername: '',
+            id: '',
             "nameValid": false,
             "formValid": false,
             "validationMessage": '',
@@ -26,14 +26,14 @@ class MainAddFolder extends Component {
         }
     }
 
-    folderNameChanged(name) {
-        this.setState({name}, () => {this.validateName(name)});
+    folderNameChanged(foldername) {
+        this.setState({foldername}, () => {this.validateName(foldername)});
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        const folder = (({name, id}) => ({name, id}))(this.state);
-        const url = 'http://localhost:9090/folders'
+        const folder = (({foldername, id}) => ({foldername, id}))(this.state);
+        const url = `${config.API_ENDPOINT}/folders`
         const options = {
             method: 'POST',
             body: JSON.stringify(folder),
@@ -50,12 +50,15 @@ class MainAddFolder extends Component {
                 return res.json();
             })
             .then(data => {
-                this.setState({
-                    name: '',
-                    id: '',
-                });
-                this.props.handleAdd(folder);
-                this.props.history.goBack();
+                this.setState(
+                    {
+                        foldername: '',
+                        id: '',
+                    }
+                ) 
+                this.props.handleAdd(data, () => {
+                    this.props.history.goBack();
+                })    
             })
             .catch(err => {
                 this.setState({
@@ -67,7 +70,6 @@ class MainAddFolder extends Component {
 
     formValid() {
         if (this.state.nameValid) {
-            console.log('New Folder Form is Valid!')
         }
         this.setState({
             formValid: this.state.nameValid
@@ -86,8 +88,6 @@ class MainAddFolder extends Component {
             fieldError = '';
             hasError = false;
         };
-
-        console.log('Name Valid', this.state.nameValid)
         this.setState({
             validationMessage: fieldError,
             nameValid: !hasError,
@@ -96,13 +96,12 @@ class MainAddFolder extends Component {
 
     
     render() {
-
         return (
             <div className='mainAddFolder'>
                 <h2>Create Folder</h2>
                 <form className='mainAddFolder__form' onSubmit={e => this.handleSubmit(e)}>
                     <label htmlFor='name'>Name</label>
-                    <input type='text' name='name' id='name' placeholder='Folder Name' value={this.state.name} onChange={e => this.folderNameChanged(e.target.value)} />
+                    <input type='text' name='name' id='name' placeholder='Folder Name' value={this.state.foldername} onChange={e => this.folderNameChanged(e.target.value)} />
                     <ValidationError hasError={!this.state.nameValid} message={this.state.validationMessage} />
                     <div className='mainAddFolder__buttons'>
                         <button type='submit' disabled={!this.state.formValid}>Add Folder</button>
